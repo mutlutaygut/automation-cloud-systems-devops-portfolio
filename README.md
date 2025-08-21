@@ -1,5 +1,5 @@
-# Automation Portfolio — Systems • Cloud • DevOps
-
+# Automation Portfolio - Systems / Cloud / DevOps
+![ps-ci](https://github.com/mutlutaygut/automation-cloud-systems-devops-portfolio/actions/workflows/powershell-ci.yml/badge.svg)
 This repository demonstrates a **practical baseline** for automation-focused engineering:
 - **Systems:** Windows endpoint hygiene & repeatable maintenance
 - **Cloud-ready:** Structure intended to extend with Intune, Azure automation and Terraform (IaC)
