@@ -10,7 +10,7 @@ This repository demonstrates a **practical baseline** for automation-focused eng
 
 ---
 
-## What’s included today
+## Current contents
 
 1) **PowerShell automation**
    - `scripts/Clean-TempFiles.ps1`  
