@@ -22,3 +22,13 @@ jobs:
       - name: Run cleanup script (safe WhatIf)
         shell: pwsh
         run: pwsh ./scripts/Clean-TempFiles.ps1 -WhatIf
+
+      - name: Install Pester
+        shell: pwsh
+        run: Install-Module Pester -Force -SkipPublisherCheck
+
+      - name: Run Pester tests
+        shell: pwsh
+        run: |
+          Import-Module Pester -Force
+          Invoke-Pester -Path ./tests -Output Detailed -EnableExit
