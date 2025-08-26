@@ -27,8 +27,8 @@ jobs:
         shell: pwsh
         run: Install-Module Pester -Force -SkipPublisherCheck
 
-      - name: Run Pester tests
+            - name: Run Pester tests
         shell: pwsh
         run: |
           Import-Module Pester -Force
-          Invoke-Pester -Path ./tests -Output Detailed -EnableExit
+          Invoke-Pester -Path ./tests -Verbose -EnableExit
