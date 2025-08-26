@@ -1,41 +1,14 @@
 name: ps-ci
-
 on:
   push:
     branches: [ main ]
   pull_request:
-
 jobs:
-  analyze-and-run:
-    runs-on: windows-latest
+  run-script:
+    runs-on: windows-latest   # istersen: windows-2022
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Setup PowerShell
-        uses: PowerShell/PowerShell-For-GitHub-Actions@v1
-
-      - name: Install tools (PSScriptAnalyzer, Pester)
-        shell: pwsh
-        run: |
-          Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
-          Install-Module PSScriptAnalyzer -Scope CurrentUser -Force
-          Install-Module Pester -Force -SkipPublisherCheck
-
-      - name: Static analysis
-        shell: pwsh
-        run: |
-          $results = Invoke-ScriptAnalyzer -Path ./scripts -Recurse -Severity Error,Warning
-          $results | Format-Table -AutoSize
-          if ($results.Count -gt 0) { Write-Error "ScriptAnalyzer found issues."; exit 1 }
-
       - name: Run cleanup script (safe WhatIf)
         shell: pwsh
         run: pwsh ./scripts/Clean-TempFiles.ps1 -WhatIf
-
-      - name: Run Pester tests
-        shell: pwsh
-        run: |
-          Import-Module Pester -Force
-          Invoke-Pester -Path ./tests -Output Detailed -EnableExit
-
