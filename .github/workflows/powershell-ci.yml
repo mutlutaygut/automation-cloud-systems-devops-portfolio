@@ -12,6 +12,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Install PSScriptAnalyzer
+        shell: pwsh
+        run: |
+          Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+          Install-Module PSScriptAnalyzer -Scope CurrentUser -Force
+
+
       - name: Run cleanup script (safe WhatIf)
         shell: pwsh
         run: pwsh ./scripts/Clean-TempFiles.ps1 -WhatIf
