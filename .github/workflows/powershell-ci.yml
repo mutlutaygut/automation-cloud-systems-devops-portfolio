@@ -1,14 +1,17 @@
 name: ps-ci
+
 on:
   push:
     branches: [ main ]
   pull_request:
+
 jobs:
   run-script:
     runs-on: windows-latest   # istersen: windows-2022
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Run cleanup script (safe WhatIf)
         shell: pwsh
         run: pwsh ./scripts/Clean-TempFiles.ps1 -WhatIf
