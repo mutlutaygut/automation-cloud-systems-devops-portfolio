@@ -18,6 +18,12 @@ jobs:
           Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
           Install-Module PSScriptAnalyzer -Scope CurrentUser -Force
 
+      - name: Static analysis (fail only on Errors)
+        shell: pwsh
+        run: |
+          $results = Invoke-ScriptAnalyzer -Path ./scripts -Recurse -Severity Error
+          $results | Format-Table -AutoSize
+          if ($results.Count -gt 0) { Write-Error "ScriptAnalyzer found errors."; exit 1 }
 
       - name: Run cleanup script (safe WhatIf)
         shell: pwsh
@@ -27,8 +33,9 @@ jobs:
         shell: pwsh
         run: Install-Module Pester -Force -SkipPublisherCheck
 
-            - name: Run Pester tests
+      - name: Run Pester tests
         shell: pwsh
         run: |
           Import-Module Pester -Force
-          Invoke-Pester -Path ./tests -Verbose -EnableExit
+          $result = Invoke-Pester -Path ./tests -PassThru -Verbose
+          if ($result.FailedCount -gt 0) { exit 1 }
