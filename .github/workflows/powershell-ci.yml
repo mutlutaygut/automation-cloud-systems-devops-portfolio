@@ -1,0 +1,39 @@
+name: ps-ci
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  analyze-and-run:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PowerShell
+        uses: actions/setup-powershell@v2
+
+      - name: Install tools (PSScriptAnalyzer, Pester)
+        shell: pwsh
+        run: |
+          Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
+          Install-Module PSScriptAnalyzer -Scope CurrentUser -Force
+          Install-Module Pester -Scope CurrentUser -Force
+
+      - name: Static analysis
+        shell: pwsh
+        run: |
+          $results = Invoke-ScriptAnalyzer -Path ./scripts -Recurse -Severity Error,Warning
+          $results | Format-Table -AutoSize
+          if ($results.Count -gt 0) { Write-Error "ScriptAnalyzer found issues."; exit 1 }
+
+      - name: Run cleanup script (safe WhatIf)
+        shell: pwsh
+        run: pwsh ./scripts/Clean-TempFiles.ps1 -WhatIf
+
+      - name: Run Pester tests
+        shell: pwsh
+        run: |
+          Invoke-Pester -Path ./tests -CI -EnableExit
