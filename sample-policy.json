@@ -1,0 +1,8 @@
+{
+  "name": "Sample Windows Update policy",
+  "platform": "windows",
+  "settings": [
+    { "path": "WindowsUpdate/BranchReadinessLevel", "value": "SemiAnnual" },
+    { "path": "WindowsUpdate/DeferFeatureUpdatesPeriodInDays", "value": 7 }
+  ]
+}
