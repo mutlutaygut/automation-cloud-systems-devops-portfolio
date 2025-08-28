@@ -29,6 +29,10 @@ jobs:
         shell: pwsh
         run: pwsh ./scripts/Clean-TempFiles.ps1 -WhatIf
 
+      - name: Validate Intune configs
+        shell: pwsh
+        run: pwsh ./Validate-IntuneConfigs.ps1 
+
       - name: Install Pester
         shell: pwsh
         run: Install-Module Pester -Force -SkipPublisherCheck
