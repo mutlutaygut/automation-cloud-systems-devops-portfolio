@@ -31,7 +31,7 @@ jobs:
 
       - name: Validate Intune configs
         shell: pwsh
-        run: pwsh ./Validate-IntuneConfigs.ps1 
+        run: pwsh ./intune/Validate-IntuneConfigs.ps1
 
       - name: Validate Azure ARM templates
         shell: pwsh
