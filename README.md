@@ -9,7 +9,7 @@ This repository has prepared to demonstrate a **practical baseline** for automat
 - `tests` — Pester tests for smoke-level validation.
 - (Root) `oma-uris.csv`, `sample-policy.json`, `azure-storageAccount.*` — example Intune and ARM templates.  
  
-## Local quick start
+## Quick Start
 
 ```powershell
 # Safe dry-run
